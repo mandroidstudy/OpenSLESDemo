@@ -121,3 +121,30 @@ Java_com_mao_openslesdemo_MainActivity_nativePlay(JNIEnv *env, jobject thiz, jst
     (*player)->SetPlayState(player,SL_PLAYSTATE_PLAYING);
     bufferQueueCallable(bufferQueueItf,NULL);
 }
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_mao_openslesdemo_MainActivity_release(JNIEnv *env, jobject thiz) {
+    if (playerObject!=NULL){
+        (*playerObject)->Destroy(playerObject);
+        playerObject=NULL;
+        bufferQueueItf=NULL;
+    }
+
+    if (outputMixObject!=NULL){
+        (*outputMixObject)->Destroy(outputMixObject);
+        outputMixObject=NULL;
+        outputMixEnvironmentalReverb=NULL;
+    }
+
+    if (engineObject!=NULL){
+        (*engineObject)->Destroy(engineObject);
+        engineObject=NULL;
+        engineEngine=NULL;
+    }
+
+    if(buff!=NULL){
+        free(buff);
+        buff=NULL;
+    }
+}

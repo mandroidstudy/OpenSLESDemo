@@ -25,5 +25,18 @@ public class MainActivity extends AppCompatActivity {
         nativePlay(path+File.separator+"mydream.pcm");
     }
 
+    public void shutdown(View view) {
+        release();
+    }
+
     public native void nativePlay(String url);
+
+    public native void release();
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        release();
+    }
+
 }
